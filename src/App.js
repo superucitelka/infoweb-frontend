@@ -9,8 +9,10 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
    efektivně vyřešit tzv. routování, neboli směrování v aplikaci - vytvoření odkazů na různá místa v aplikaci */
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-/* Import komponenty Homepage, která se nachází v podsložce pages */
+/* Import komponent, které se nacházejí v jednotlivých modulech v podsložce pages */
 import Homepage from './pages/Homepage';
+import Articles from './pages/Articles';
+import ArticleDetail from './pages/ArticleDetail';
 /* Importy modulů obsahujících komponenty Header a Footer.
    Protože jsou exportovány jako konstanty, je nutné vložit jejich názvy mezi složené závorky. */
 import { Header } from './components/Header';
@@ -28,7 +30,7 @@ const client = new ApolloClient({
 function App() {
   return (
     /* Konstrukce komponenty s využitím jazyka JSX */
-    /* Inicializace routeru - směrovače */
+    /* Inicializace routeru - směrovače (viz https://v5.reactrouter.com/web/guides/primary-components) */
     <BrowserRouter>
       {/* Inicializace služby Apollo s předáním nastavení klienta */}
       <ApolloProvider client={client}>
@@ -39,12 +41,17 @@ function App() {
           <Routes>
             {/* URL adresa/cesta k domovské stránce */}
             <Route path="/" element={<Homepage />} />
+            {/* URL adresa/cesta k stránce zobrazující přehled článků */}
+            <Route path="/articles" element={<Articles />} />
+            {/* URL adresa/cesta k stránce zobrazující podrobné informace o jednom článku.
+                :id = parametr, který umožňuje předávat v URL id konkrétního článku. */}
+            <Route path="/articles/:id" element={<ArticleDetail />} />            
           </Routes>
         </main>
         {/* Vložení komponenty Footer, které předáváme atributy/props logo a copyright.
             Soubor skola-logo.png musí být umístěn ve složce public, která je chápána jako základní složka webu (obsahuje statické soubory).
             Atribut/props copyright je v tomto případě předáván jako JS objekt, který má dvě vnitřní proměnné/atributy projectName a projectAuthor. */}
-        <Footer logo="./skola-logo.png" copyright={{projectName: "Ročníkový projekt IT2", projectAuthor: "Viktor Hujer"}} />
+        <Footer logo="/skola-logo.png" copyright={{projectName: "Ročníkový projekt IT2", projectAuthor: "Viktor Hujer"}} />
       </ApolloProvider>
     </BrowserRouter>
   );

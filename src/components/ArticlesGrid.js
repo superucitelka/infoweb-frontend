@@ -55,7 +55,11 @@ export const ArticlesGrid = () => {
   /* Situace, kdy jsou načítána data z backend serveru. */
   if (loading) return <p>Probíhá načítání stránky...</p>;
   /* Situace, kdy došlo k chybě během načítání dat. */
-  if (error) return <p>Došlo k chybě: {JSON.stringify(error)}</p>;
+  if (error) return (
+    <Container>
+      <Alert variant="danger">Došlo k chybě: {JSON.stringify(error)}</Alert>
+    </Container>
+  );
   /* Dotaz byl úspěšně proveden a v odeslaných datech je aspoň 1 článek: */
   if (data.articles.data.length > 0)
     return (
@@ -75,7 +79,7 @@ export const ArticlesGrid = () => {
                     {/* ... použije se spojení adresy webu s cestou k danému obrázku, která je uložena v databázi backendu. */}
                     <Figure.Image
                       alt={article.attributes.title}
-                      src={`http://localhost:1337${article.attributes.image.data.attributes.url}`}
+                      src={`${process.env.REACT_APP_BACKEND_URL}${article.attributes.image.data.attributes.url}`}
                       rounded
                     />
                     <Figure.Caption>

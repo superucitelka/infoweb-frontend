@@ -21,7 +21,7 @@ import { Footer } from './components/Footer';
 // Inicializace ApolloClienta
 const client = new ApolloClient({
   /* Nastavení adresy, na které backendový server přijímá dotazy GraphQL */
-  uri: "http://localhost:1337/graphql",
+  uri: `${process.env.REACT_APP_BACKEND_URL}/graphql`,
   /* Základní nastavení vyrovnávací paměti (cache) pro urychlení načtení často používaných částí webu */
   cache: new InMemoryCache(),
 });
